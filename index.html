@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Калькулятор оценок</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
+    input, button { padding: 10px; margin: 5px 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Калькулятор оценок</h2>
+  <p>Введите оценки через запятую (например: 4,5,3,5):</p>
+  <input type="text" id="gradesInput" placeholder="Например: 4,5,3,5">
+  <button onclick="calculateAverage()">Посчитать среднюю</button>
+  <p id="result"></p>
+
+  <script>
+    function calculateAverage() {
+      const input = document.getElementById('gradesInput').value;
+      const grades = input.split(',').map(g => parseFloat(g.trim())).filter(g => !isNaN(g));
+      if (grades.length === 0) {
+        document.getElementById('result').innerText = 'Введите хотя бы одну оценку.';
+        return;
+      }
+      const sum = grades.reduce((a, b) => a + b, 0);
+      const avg = sum / grades.length;
+      document.getElementById('result').innerText = 'Средняя оценка: ' + avg.toFixed(2);
+    }
+  </script>
+</body>
+</html>
