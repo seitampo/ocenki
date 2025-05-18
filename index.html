@@ -1,165 +1,175 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Калькулятор итогового процента</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f4f8;
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-    color: #333;
-  }
-  h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-  }
-  .section {
-    background: #fff;
-    padding: 20px 25px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
-    position: relative;
-  }
-  .section h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #34495e;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .section h3 img {
-    height: 60px;
-    border-radius: 10px;
-  }
-  .pair {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .pair input[type=number] {
-    width: 90px;
-    padding: 8px 10px;
-    font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    transition: border-color 0.3s ease;
-  }
-  .pair input[type=number]:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 8px #3498dbaa;
-  }
-  .pair span {
-    font-weight: 700;
-    font-size: 18px;
-    user-select: none;
-  }
-  .remove-btn {
-    background: #e74c3c;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    flex-shrink: 0;
-  }
-  .remove-btn:hover {
-    background: #c0392b;
-  }
-  button.add-btn {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 8px;
-  }
-  button.add-btn:hover {
-    background: #219150;
-  }
-  #calculateBtn {
-    background: #2980b9;
-    color: white;
-    border: none;
-    padding: 14px;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 700;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  #calculateBtn:hover {
-    background: #1c5985;
-  }
-  #result {
-    margin-top: 25px;
-    font-size: 18px;
-    white-space: pre-line;
-    padding: 15px;
-    border-radius: 8px;
-    background: #ecf0f1;
-    min-height: 70px;
-    color: #2c3e50;
-    box-shadow: inset 0 0 8px #bdc3c7;
-  }
-
-  /* Адаптив */
-  @media (max-width: 480px) {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Калькулятор итогового процента</title>
+  <style>
     body {
-      margin: 20px 10px;
-      padding: 15px;
-      max-width: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      color: #333;
     }
-    .pair {
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .pair input[type=number] {
-      width: 45%;
-      font-size: 15px;
-      padding: 8px 8px;
-    }
-    .pair span {
-      flex-basis: 100%;
+    h2 {
       text-align: center;
-      font-size: 16px;
-      margin: 4px 0 0;
+      color: #2c3e50;
+      margin-bottom: 30px;
     }
-    .remove-btn {
-      width: 100%;
-      padding: 8px 0;
-      font-size: 16px;
-      border-radius: 6px;
-      margin-top: 6px;
+    .section {
+      background: #fff;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+    }
+    .section h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #34495e;
     }
     .section h3 img {
-      height: 40px;
+      width: 150px;
+      height: auto;
+      border-radius: 12px;
+      margin-left: 15px;
+      vertical-align: middle;
     }
-  }
-</style>
+    .pair {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .pair input[type=number] {
+      width: 90px;
+      padding: 8px 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+    }
+    .pair input[type=number]:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 8px #3498dbaa;
+    }
+    .pair span {
+      font-weight: 700;
+      font-size: 18px;
+      user-select: none;
+    }
+    .remove-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    .remove-btn:hover {
+      background: #c0392b;
+    }
+    button.add-btn {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 8px;
+    }
+    button.add-btn:hover {
+      background: #219150;
+    }
+    #calculateBtn {
+      background: #2980b9;
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    #calculateBtn:hover {
+      background: #1c5985;
+    }
+    #result {
+      margin-top: 25px;
+      font-size: 18px;
+      white-space: pre-line;
+      padding: 15px;
+      border-radius: 8px;
+      background: #ecf0f1;
+      min-height: 70px;
+      color: #2c3e50;
+      box-shadow: inset 0 0 8px #bdc3c7;
+    }
+
+    /* Адаптив для мобильных */
+    @media (max-width: 480px) {
+      body {
+        margin: 20px 10px;
+        padding: 15px;
+        max-width: 100%;
+      }
+      .pair {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .pair input[type=number] {
+        width: 45%;
+        font-size: 15px;
+        padding: 8px 8px;
+      }
+      .pair span {
+        flex-basis: 100%;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 0 0;
+      }
+      .remove-btn {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 16px;
+        border-radius: 6px;
+        margin-top: 6px;
+      }
+      .section h3 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .section h3 img {
+        width: 100%;
+        height: auto;
+        margin: 10px 0 0;
+        display: block;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <h2>Калькулятор сорсоч</h2>
 
   <div class="section" id="sorSection">
-    <h3>Баллы за СОР
-      <img src="https://seitampo.github.io/ocenki_for_ranyia/imagg.jpg" alt="sor image">
+    <h3>
+      Баллы за СОР
+      <img src="https://raw.githubusercontent.com/seitampo/ocenki_for_ranyia/main/cat.gif" alt="Смешная гифка" />
     </h3>
     <div id="sorList">
       <div class="pair">
@@ -173,8 +183,9 @@
   </div>
 
   <div class="section" id="sochSection">
-    <h3>Баллы за СОЧ
-      <img src="https://seitampo.github.io/ocenki_for_ranyia/cat.gif" alt="soch gif">
+    <h3>
+      Баллы за СОЧ
+      <img src="https://raw.githubusercontent.com/seitampo/ocenki_for_ranyia/main/imagg.jpg" alt="Картинка по фану" />
     </h3>
     <div id="sochList">
       <div class="pair">
@@ -236,8 +247,12 @@
         const s = parseFloat(scores[i].value);
         const m = parseFloat(maxs[i].value);
 
-        if (isNaN(s) || isNaN(m)) return null;
-        if (m === 0 || s < 0 || m < 0 || s > m) return null;
+        if (isNaN(s) || isNaN(m)) {
+          return null;
+        }
+        if (m === 0 || s < 0 || m < 0 || s > m) {
+          return null;
+        }
 
         totalScore += s;
         totalMax += m;
@@ -249,12 +264,7 @@
     const soch = sumScores('sochSection');
 
     if (!sor || !soch) {
-      document.getElementById('result').innerText = 'Неправильные баллы. Убедись, что все поля заполнены корректно.';
-      return;
-    }
-
-    if (sor.totalMax === 0 || soch.totalMax === 0) {
-      document.getElementById('result').innerText = 'Макс баллы не могут быть нулями.';
+      document.getElementById('result').innerText = 'Ошибка: проверь поля и не вводи неправильные значения.';
       return;
     }
 
@@ -265,7 +275,7 @@
     document.getElementById('result').innerText =
       `Проценты за СОР: ${sorPercent.toFixed(2)}%\n` +
       `Проценты за СОЧ: ${sochPercent.toFixed(2)}%\n` +
-      `Итоговый процент (среднее): ${finalPercent.toFixed(2)}%`;
+      `Итоговый процент: ${finalPercent.toFixed(2)}%`;
   }
 </script>
 
