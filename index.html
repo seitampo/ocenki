@@ -8,7 +8,7 @@
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f0f4f8;
-    max-width: 600px;
+    max-width: 700px;
     margin: 40px auto;
     padding: 20px;
     color: #333;
@@ -24,11 +24,19 @@
     margin-bottom: 25px;
     border-radius: 10px;
     box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+    position: relative;
   }
   .section h3 {
     margin-top: 0;
     margin-bottom: 15px;
     color: #34495e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section h3 img {
+    height: 60px;
+    border-radius: 10px;
   }
   .pair {
     display: flex;
@@ -110,7 +118,7 @@
     box-shadow: inset 0 0 8px #bdc3c7;
   }
 
-  /* Адаптив для мобильных */
+  /* Адаптив */
   @media (max-width: 480px) {
     body {
       margin: 20px 10px;
@@ -139,6 +147,9 @@
       border-radius: 6px;
       margin-top: 6px;
     }
+    .section h3 img {
+      height: 40px;
+    }
   }
 </style>
 </head>
@@ -147,12 +158,14 @@
   <h2>Калькулятор сорсоч</h2>
 
   <div class="section" id="sorSection">
-    <h3>Баллы за СОР</h3>
+    <h3>Баллы за СОР
+      <img src="https://seitampo.github.io/ocenki_for_ranyia/imagg.jpg" alt="sor image">
+    </h3>
     <div id="sorList">
       <div class="pair">
         <input type="number" min="0" placeholder="Твои баллы" class="score" />
         <span>/</span>
-        <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
+        <input type="number" min="1" placeholder="Макс баллы" class="max" />
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
@@ -160,12 +173,14 @@
   </div>
 
   <div class="section" id="sochSection">
-    <h3>Баллы за СОЧ</h3>
+    <h3>Баллы за СОЧ
+      <img src="https://seitampo.github.io/ocenki_for_ranyia/cat.gif" alt="soch gif">
+    </h3>
     <div id="sochList">
       <div class="pair">
         <input type="number" min="0" placeholder="Твои баллы" class="score" />
         <span>/</span>
-        <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
+        <input type="number" min="1" placeholder="Макс баллы" class="max" />
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
@@ -184,7 +199,7 @@
     newPair.innerHTML = `
       <input type="number" min="0" placeholder="Твои баллы" class="score" />
       <span>/</span>
-      <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
+      <input type="number" min="1" placeholder="Макс баллы" class="max" />
       <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
     `;
     sorList.appendChild(newPair);
@@ -197,7 +212,7 @@
     newPair.innerHTML = `
       <input type="number" min="0" placeholder="Твои баллы" class="score" />
       <span>/</span>
-      <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
+      <input type="number" min="1" placeholder="Макс баллы" class="max" />
       <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
     `;
     sochList.appendChild(newPair);
@@ -221,18 +236,8 @@
         const s = parseFloat(scores[i].value);
         const m = parseFloat(maxs[i].value);
 
-        if (isNaN(s) || isNaN(m)) {
-          return null;
-        }
-        if (m === 0) {
-          return null;
-        }
-        if (s < 0 || m < 0) {
-          return null;
-        }
-        if (s > m) {
-          return null;
-        }
+        if (isNaN(s) || isNaN(m)) return null;
+        if (m === 0 || s < 0 || m < 0 || s > m) return null;
 
         totalScore += s;
         totalMax += m;
@@ -244,12 +249,12 @@
     const soch = sumScores('sochSection');
 
     if (!sor || !soch) {
-      document.getElementById('result').innerText = 'Неправильна баллы не могут быть больше максимума и все поля заполнить надо.';
+      document.getElementById('result').innerText = 'Неправильные баллы. Убедись, что все поля заполнены корректно.';
       return;
     }
 
     if (sor.totalMax === 0 || soch.totalMax === 0) {
-      document.getElementById('result').innerText = 'Ноль не может быть макс баллом';
+      document.getElementById('result').innerText = 'Макс баллы не могут быть нулями.';
       return;
     }
 
