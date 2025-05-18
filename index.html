@@ -144,15 +144,15 @@
 </head>
 <body>
 
-  <h2>Калькулятор итогового процента по СОР и СОЧ</h2>
+  <h2>Калькулятор сорсоч</h2>
 
   <div class="section" id="sorSection">
     <h3>Баллы за СОР</h3>
     <div id="sorList">
       <div class="pair">
-        <input type="number" min="0" placeholder="Баллы" class="score" />
+        <input type="number" min="0" placeholder="Твои баллы" class="score" />
         <span>/</span>
-        <input type="number" min="1" placeholder="Максимум" class="max" />
+        <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
@@ -163,9 +163,9 @@
     <h3>Баллы за СОЧ</h3>
     <div id="sochList">
       <div class="pair">
-        <input type="number" min="0" placeholder="Баллы" class="score" />
+        <input type="number" min="0" placeholder="Твои баллы" class="score" />
         <span>/</span>
-        <input type="number" min="1" placeholder="Максимум" class="max" />
+        <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
@@ -182,9 +182,9 @@
     const newPair = document.createElement('div');
     newPair.className = 'pair';
     newPair.innerHTML = `
-      <input type="number" min="0" placeholder="Баллы" class="score" />
+      <input type="number" min="0" placeholder="Твои баллы" class="score" />
       <span>/</span>
-      <input type="number" min="1" placeholder="Максимум" class="max" />
+      <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
       <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
     `;
     sorList.appendChild(newPair);
@@ -195,9 +195,9 @@
     const newPair = document.createElement('div');
     newPair.className = 'pair';
     newPair.innerHTML = `
-      <input type="number" min="0" placeholder="Баллы" class="score" />
+      <input type="number" min="0" placeholder="Твои баллы" class="score" />
       <span>/</span>
-      <input type="number" min="1" placeholder="Максимум" class="max" />
+      <input type="number" min="1" placeholder="Макс баллы за соч" class="max" />
       <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
     `;
     sochList.appendChild(newPair);
@@ -244,12 +244,12 @@
     const soch = sumScores('sochSection');
 
     if (!sor || !soch) {
-      document.getElementById('result').innerText = 'Пожалуйста, заполните все поля корректно. Баллы не могут быть больше максимума, и все поля обязательны.';
+      document.getElementById('result').innerText = 'Неправильна баллы не могут быть больше максимума и все поля заполнить надо.';
       return;
     }
 
     if (sor.totalMax === 0 || soch.totalMax === 0) {
-      document.getElementById('result').innerText = 'Максимум не может быть равен нулю.';
+      document.getElementById('result').innerText = 'Ноль не может быть макс баллом';
       return;
     }
 
@@ -258,8 +258,8 @@
     const finalPercent = (sorPercent + sochPercent) / 2;
 
     document.getElementById('result').innerText =
-      `Процент за СОР: ${sorPercent.toFixed(2)}%\n` +
-      `Процент за СОЧ: ${sochPercent.toFixed(2)}%\n` +
+      `Проценты за СОР: ${sorPercent.toFixed(2)}%\n` +
+      `Проценты за СОЧ: ${sochPercent.toFixed(2)}%\n` +
       `Итоговый процент (среднее): ${finalPercent.toFixed(2)}%`;
   }
 </script>
