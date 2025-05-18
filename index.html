@@ -1,35 +1,117 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Калькулятор итогового процента с динамическими полями</title>
-  <style>
-    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
-    .section { margin-bottom: 20px; }
-    .pair {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
-    input[type=number] {
-      width: 70px;
-      padding: 5px;
-    }
-    button {
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-    .remove-btn {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 5px 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Калькулятор итогового процента</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #333;
+  }
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  .section {
+    background: #fff;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+  }
+  .section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #34495e;
+  }
+  .pair {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pair input[type=number] {
+    width: 90px;
+    padding: 8px 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  .pair input[type=number]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 8px #3498dbaa;
+  }
+  .pair span {
+    font-weight: 700;
+    font-size: 18px;
+    user-select: none;
+  }
+  .remove-btn {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+  }
+  .remove-btn:hover {
+    background: #c0392b;
+  }
+  button.add-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 8px;
+  }
+  button.add-btn:hover {
+    background: #219150;
+  }
+  #calculateBtn {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  #calculateBtn:hover {
+    background: #1c5985;
+  }
+  #result {
+    margin-top: 25px;
+    font-size: 18px;
+    white-space: pre-line;
+    padding: 15px;
+    border-radius: 8px;
+    background: #ecf0f1;
+    min-height: 70px;
+    color: #2c3e50;
+    box-shadow: inset 0 0 8px #bdc3c7;
+  }
+</style>
 </head>
 <body>
+
   <h2>Калькулятор итогового процента по СОР и СОЧ</h2>
 
   <div class="section" id="sorSection">
@@ -42,7 +124,7 @@
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
-    <button onclick="addSor()">Добавить СОР</button>
+    <button class="add-btn" onclick="addSor()">Добавить СОР</button>
   </div>
 
   <div class="section" id="sochSection">
@@ -55,20 +137,100 @@
         <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
       </div>
     </div>
-    <button onclick="addSoch()">Добавить СОЧ</button>
+    <button class="add-btn" onclick="addSoch()">Добавить СОЧ</button>
   </div>
 
-  <button onclick="calculatePercent()">Посчитать итоговый процент</button>
+  <button id="calculateBtn" onclick="calculatePercent()">Посчитать итоговый процент</button>
 
-  <p id="result" style="white-space: pre-line; margin-top: 20px;"></p>
+  <p id="result"></p>
 
-  <script>
-    function addSor() {
-      const sorList = document.getElementById('sorList');
-      const newPair = document.createElement('div');
-      newPair.className = 'pair';
-      newPair.innerHTML = `
-        <input type="number" min="0" placeholder="Баллы" class="score" />
-        <span>/</span>
-        <input type="number" min="1" placeholder="Максимум" class="max" />
-        <button class="remove-btn" onclick="removePair(this)" title="Удалить
+<script>
+  function addSor() {
+    const sorList = document.getElementById('sorList');
+    const newPair = document.createElement('div');
+    newPair.className = 'pair';
+    newPair.innerHTML = `
+      <input type="number" min="0" placeholder="Баллы" class="score" />
+      <span>/</span>
+      <input type="number" min="1" placeholder="Максимум" class="max" />
+      <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
+    `;
+    sorList.appendChild(newPair);
+  }
+
+  function addSoch() {
+    const sochList = document.getElementById('sochList');
+    const newPair = document.createElement('div');
+    newPair.className = 'pair';
+    newPair.innerHTML = `
+      <input type="number" min="0" placeholder="Баллы" class="score" />
+      <span>/</span>
+      <input type="number" min="1" placeholder="Максимум" class="max" />
+      <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
+    `;
+    sochList.appendChild(newPair);
+  }
+
+  function removePair(button) {
+    const pair = button.parentElement;
+    pair.parentElement.removeChild(pair);
+  }
+
+  function calculatePercent() {
+    function sumScores(sectionId) {
+      const section = document.getElementById(sectionId);
+      const scores = section.querySelectorAll('.score');
+      const maxs = section.querySelectorAll('.max');
+
+      let totalScore = 0;
+      let totalMax = 0;
+
+      for (let i = 0; i < scores.length; i++) {
+        const s = parseFloat(scores[i].value);
+        const m = parseFloat(maxs[i].value);
+
+        if (isNaN(s) || isNaN(m)) {
+          return null;
+        }
+        if (m === 0) {
+          return null;
+        }
+        if (s < 0 || m < 0) {
+          return null;
+        }
+        if (s > m) {
+          return null;
+        }
+
+        totalScore += s;
+        totalMax += m;
+      }
+      return { totalScore, totalMax };
+    }
+
+    const sor = sumScores('sorSection');
+    const soch = sumScores('sochSection');
+
+    if (!sor || !soch) {
+      document.getElementById('result').innerText = 'Пожалуйста, заполните все поля корректно. Баллы не могут быть больше максимума, и все поля обязательны.';
+      return;
+    }
+
+    if (sor.totalMax === 0 || soch.totalMax === 0) {
+      document.getElementById('result').innerText = 'Максимум не может быть равен нулю.';
+      return;
+    }
+
+    const sorPercent = (sor.totalScore / sor.totalMax) * 100;
+    const sochPercent = (soch.totalScore / soch.totalMax) * 100;
+    const finalPercent = (sorPercent + sochPercent) / 2;
+
+    document.getElementById('result').innerText =
+      `Процент за СОР: ${sorPercent.toFixed(2)}%\n` +
+      `Процент за СОЧ: ${sochPercent.toFixed(2)}%\n` +
+      `Итоговый процент (среднее): ${finalPercent.toFixed(2)}%`;
+  }
+</script>
+
+</body>
+</html>
