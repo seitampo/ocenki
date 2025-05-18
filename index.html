@@ -2,77 +2,73 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Калькулятор итогового процента</title>
+  <title>Калькулятор итогового процента с динамическими полями</title>
   <style>
-    body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
-    input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
+    .section { margin-bottom: 20px; }
+    .pair {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+    input[type=number] {
+      width: 70px;
+      padding: 5px;
+    }
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h2>Калькулятор итогового процента по СОР и СОЧ</h2>
 
-  <label>Баллы за СОР (например: 1/25, 5/10):</label>
-  <input type="text" id="sorInput" placeholder="Введите оценки СОР через запятую" />
+  <div class="section" id="sorSection">
+    <h3>Баллы за СОР</h3>
+    <div id="sorList">
+      <div class="pair">
+        <input type="number" min="0" placeholder="Баллы" class="score" />
+        <span>/</span>
+        <input type="number" min="1" placeholder="Максимум" class="max" />
+        <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
+      </div>
+    </div>
+    <button onclick="addSor()">Добавить СОР</button>
+  </div>
 
-  <label>Баллы за СОЧ (например: 10/20, 15/30):</label>
-  <input type="text" id="sochInput" placeholder="Введите оценки СОЧ через запятую" />
+  <div class="section" id="sochSection">
+    <h3>Баллы за СОЧ</h3>
+    <div id="sochList">
+      <div class="pair">
+        <input type="number" min="0" placeholder="Баллы" class="score" />
+        <span>/</span>
+        <input type="number" min="1" placeholder="Максимум" class="max" />
+        <button class="remove-btn" onclick="removePair(this)" title="Удалить">×</button>
+      </div>
+    </div>
+    <button onclick="addSoch()">Добавить СОЧ</button>
+  </div>
 
   <button onclick="calculatePercent()">Посчитать итоговый процент</button>
 
-  <p id="result"></p>
+  <p id="result" style="white-space: pre-line; margin-top: 20px;"></p>
 
   <script>
-    function parseScores(str) {
-      const parts = str.split(',');
-      let totalScore = 0;
-      let totalMax = 0;
-
-      for (let part of parts) {
-        part = part.trim();
-        if (!part) continue;
-
-        const [scoreStr, maxStr] = part.split('/');
-        const score = parseFloat(scoreStr);
-        const max = parseFloat(maxStr);
-
-        if (isNaN(score) || isNaN(max) || max === 0) {
-          return null; // ошибка формата
-        }
-
-        totalScore += score;
-        totalMax += max;
-      }
-
-      return { totalScore, totalMax };
-    }
-
-    function calculatePercent() {
-      const sorInput = document.getElementById('sorInput').value.trim();
-      const sochInput = document.getElementById('sochInput').value.trim();
-
-      const sor = parseScores(sorInput);
-      const soch = parseScores(sochInput);
-
-      if (!sor || !soch) {
-        document.getElementById('result').innerText = 'Ошибка! Введите оценки в формате "баллы/максимум", через запятую.';
-        return;
-      }
-
-      if (sor.totalMax === 0 || soch.totalMax === 0) {
-        document.getElementById('result').innerText = 'Максимум не может быть равен нулю.';
-        return;
-      }
-
-      const sorPercent = (sor.totalScore / sor.totalMax) * 100;
-      const sochPercent = (soch.totalScore / soch.totalMax) * 100;
-
-      const finalPercent = (sorPercent + sochPercent) / 2;
-
-      document.getElementById('result').innerText =
-        `Процент за СОР: ${sorPercent.toFixed(2)}%\n` +
-        `Процент за СОЧ: ${sochPercent.toFixed(2)}%\n` +
-        `Итоговый процент (среднее): ${finalPercent.toFixed(2)}%`;
-    }
-  </script>
-</body>
-</html>
+    function addSor() {
+      const sorList = document.getElementById('sorList');
+      const newPair = document.createElement('div');
+      newPair.className = 'pair';
+      newPair.innerHTML = `
+        <input type="number" min="0" placeholder="Баллы" class="score" />
+        <span>/</span>
+        <input type="number" min="1" placeholder="Максимум" class="max" />
+        <button class="remove-btn" onclick="removePair(this)" title="Удалить
