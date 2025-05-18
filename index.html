@@ -1,31 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Калькулятор оценок</title>
+  <meta charset="UTF-8" />
+  <title>Калькулятор итогового процента</title>
   <style>
     body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
-    input, button { padding: 10px; margin: 5px 0; width: 100%; }
+    input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
   </style>
 </head>
 <body>
-  <h2>Калькулятор оценок</h2>
-  <p>Введите оценки через запятую (например: 4,5,3,5):</p>
-  <input type="text" id="gradesInput" placeholder="Например: 4,5,3,5">
-  <button onclick="calculateAverage()">Посчитать среднюю</button>
+  <h2>Калькулятор итогового процента по СОР и СОЧ</h2>
+
+  <label>Баллы за СОР (например: 1/25, 5/10):</label>
+  <input type="text" id="sorInput" placeholder="Введите оценки СОР через запятую" />
+
+  <label>Баллы за СОЧ (например: 10/20, 15/30):</label>
+  <input type="text" id="sochInput" placeholder="Введите оценки СОЧ через запятую" />
+
+  <button onclick="calculatePercent()">Посчитать итоговый процент</button>
+
   <p id="result"></p>
 
   <script>
-    function calculateAverage() {
-      const input = document.getElementById('gradesInput').value;
-      const grades = input.split(',').map(g => parseFloat(g.trim())).filter(g => !isNaN(g));
-      if (grades.length === 0) {
-        document.getElementById('result').innerText = 'Введите хотя бы одну оценку.';
+    function parseScores(str) {
+      const parts = str.split(',');
+      let totalScore = 0;
+      let totalMax = 0;
+
+      for (let part of parts) {
+        part = part.trim();
+        if (!part) continue;
+
+        const [scoreStr, maxStr] = part.split('/');
+        const score = parseFloat(scoreStr);
+        const max = parseFloat(maxStr);
+
+        if (isNaN(score) || isNaN(max) || max === 0) {
+          return null; // ошибка формата
+        }
+
+        totalScore += score;
+        totalMax += max;
+      }
+
+      return { totalScore, totalMax };
+    }
+
+    function calculatePercent() {
+      const sorInput = document.getElementById('sorInput').value.trim();
+      const sochInput = document.getElementById('sochInput').value.trim();
+
+      const sor = parseScores(sorInput);
+      const soch = parseScores(sochInput);
+
+      if (!sor || !soch) {
+        document.getElementById('result').innerText = 'Ошибка! Введите оценки в формате "баллы/максимум", через запятую.';
         return;
       }
-      const sum = grades.reduce((a, b) => a + b, 0);
-      const avg = sum / grades.length;
-      document.getElementById('result').innerText = 'Средняя оценка: ' + avg.toFixed(2);
+
+      if (sor.totalMax === 0 || soch.totalMax === 0) {
+        document.getElementById('result').innerText = 'Максимум не может быть равен нулю.';
+        return;
+      }
+
+      const sorPercent = (sor.totalScore / sor.totalMax) * 100;
+      const sochPercent = (soch.totalScore / soch.totalMax) * 100;
+
+      const finalPercent = (sorPercent + sochPercent) / 2;
+
+      document.getElementById('result').innerText =
+        `Процент за СОР: ${sorPercent.toFixed(2)}%\n` +
+        `Процент за СОЧ: ${sochPercent.toFixed(2)}%\n` +
+        `Итоговый процент (среднее): ${finalPercent.toFixed(2)}%`;
     }
   </script>
 </body>
